@@ -27,6 +27,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
+import android.view.accessibility.AccessibilityEvent
 
 class AutoClickAccessibilityService : AccessibilityService() {
     companion object { const val ACTION_REFRESH = "com.apkgod.autoclicker.REFRESH" }
@@ -43,6 +44,10 @@ class AutoClickAccessibilityService : AccessibilityService() {
     }
 
     override fun onServiceConnected() { super.onServiceConnected(); registerReceiverCompat(); showOverlay(); refreshRunState() }
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+    // Macro engine không cần xử lý accessibility event.
+    // Method này tồn tại để hoàn tất contract của AccessibilityService.
+}
     override fun onInterrupt() = stopMacro()
     override fun onDestroy() { stopMacro(); screenshotExecutor.shutdownNow(); removeOverlay(); runCatching { unregisterReceiver(receiver) }; super.onDestroy() }
 
