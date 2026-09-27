@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tự động nhấn</string>
+    <string name="service_name">Tự động nhấn Accessibility</string>
+    <string name="accessibility_description">Cho phép Tự động nhấn thực hiện thao tác chạm tự động và nhận diện hình ảnh trên màn hình. Chỉ bật khi bạn chủ động sử dụng công cụ.</string>
+</resources>
