@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import com.apkgod.autoclicker.service.AutoClickAccessibilityService
 import com.google.android.material.card.MaterialCardView
 import java.io.File
 
@@ -23,10 +24,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var list: LinearLayout
     private lateinit var status: TextView
     private lateinit var repeatInput: EditText
+    private var pendingImageIndex = -1
 
-    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        if (uri != null) showImageDialog(uri)
+private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+    if (uri != null) {
+        val index = pendingImageIndex
+        pendingImageIndex = -1
+
+        if (index >= 0) {
+            val existing = ActionRepository.loadActions(this).getOrNull(index)
+            showImageDialog(uri, existing, index)
+        } else {
+            showImageDialog(uri)
+        }
+    } else {
+        pendingImageIndex = -1
     }
+}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
